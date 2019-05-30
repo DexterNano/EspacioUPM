@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 public class DatabaseController implements IDataBaseController {
+    //private String property = System.getProperty("user.dir");
     private String property = System.getProperty("user.dir");
     private boolean isClosed;      //check if databased is closed
     private Connection connection;
@@ -104,7 +105,7 @@ public class DatabaseController implements IDataBaseController {
             return;
         try{
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + property + "/TwitterUPM.db", "", "");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + property + "/EspacioUPM.db", "", "");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -248,14 +249,14 @@ public class DatabaseController implements IDataBaseController {
     }
 
     public static void addDefaultTables(IDataBaseController controller){
-        controller.addTable("Comunidad", toArray(),"Id_Com",toArray());
-        //AÑADIR AQUI LAS TABLAS DE LA BASE DE DATOS
+        //controller.addTable("Comunidad", toArray(),"Id_Com",toArray());
+        controller.addTable("Usuario",toArray("correo","EMAIL","pass","TEXT"),"correo",toArray());
     }
 
     void closeResources () {
         try {
             if (!isClosed) {
-                connection.close();
+                this.connection.close();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

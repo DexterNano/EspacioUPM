@@ -8,6 +8,12 @@ public class Usuario extends Usuario_no_registrado {
     private Usuario seguidos;           //REVISAR SI ES UN ARRAY.
     private String Historial_de_actividades;    //CONFIRMAR TIPO DE ELEMENTO.
 
+    public Usuario(String correo_electronico,String pass)
+    {
+        Correo_electronico_UPM=correo_electronico;
+        Contrasenia=pass;
+    }
+
     public Publicacion[] getPublicaciones() {
         return Publicaciones;
     }

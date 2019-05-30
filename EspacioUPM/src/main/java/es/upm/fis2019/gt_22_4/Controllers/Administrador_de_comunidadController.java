@@ -6,6 +6,10 @@ import es.upm.fis2019.gt_22_4.Interfaces.IAdministrador_de_comunidadController;
 
 public class Administrador_de_comunidadController extends Usuario implements IAdministrador_de_comunidadController //VER SI EL EXTENDS ES EN CONTROLLER O EN ADMINISTRADOR
 {
+    public Administrador_de_comunidadController(String correo_electronico, String pass) {
+        super(correo_electronico, pass);
+    }
+
     public void eliminarComunidad(Comunidad c)
     {
 

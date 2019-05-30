@@ -6,6 +6,7 @@ import es.upm.fis2019.gt_22_4.Domain.Usuario;
 import es.upm.fis2019.gt_22_4.Interfaces.IUsuarioController;
 
 public class UsuarioController implements IUsuarioController {
+
     public void logIn(Usuario u)
     {
 
