@@ -1,10 +1,12 @@
 package es.upm.fis2019.gt_22_4.Controllers;
 
 import es.upm.fis2019.gt_22_4.Domain.*;
+import es.upm.fis2019.gt_22_4.Interfaces.IComentarioController;
 import es.upm.fis2019.gt_22_4.Interfaces.IDataBaseController;
 import es.upm.fis2019.gt_22_4.Interfaces.IPublicacionController;
 import es.upm.fis2019.gt_22_4.Interfaces.IUsuarioController;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -52,9 +54,88 @@ public class UsuarioController implements IUsuarioController {
     public void comentar(Publicacion p, Comentario c)
     {
     }
-    public Comentario[] consultarComentarios(Publicacion p){
-        Comentario aux[] = new Comentario[1];
-        return aux;
+    public void consultarComentarios(Publicacion p){
+        Comentario comentarios[]=null;
+        IUsuarioController userController = new UsuarioController(_db);
+        IPublicacionController publiContoller=new PublicacionController(_db);
+        IComentarioController comentariocontroller=new ComentarioController(_db);
+        boolean esteBien;
+        boolean noVermas=false;
+        boolean end=false;
+        Integer contador=0;
+        Scanner sc =new Scanner(System.in);
+        while (!noVermas) {
+            esteBien=false;
+            System.out.println("-----------------------------------------------");
+            System.out.println("  Comentarios " + contador + "-" + (contador + 49));
+            System.out.println("  ");
+            System.out.println("-----------------------------------------------");
+            try {
+                _db.connect();
+                comentarios = new Comentario[50];
+                ArrayList<Object[]> rows = _db.readRow("Comentario", new Object[]{
+                        new Tupla<String, Object>("publicacion", p.getId_p())
+                }, "publicacion,Num_orden", null, null, null);
+                for (int i = 0; i < rows.size(); i++) {
+                    Object[] aux = rows.get(i);
+                    comentarios[i].setNum_orden((Integer) aux[1]);
+                    comentarios[i].getComentada().setId_p(_db);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                _db.dispose();
+            }
+            for(int i=0;i<comentarios.length;i++)
+            {
+                comentariocontroller.mostrarComentario(comentarios[i],p);
+            }
+            while(!esteBien) {
+                int opcion=0;
+                System.out.println("----------------------------------------");
+                System.out.println("1. Seleccionar un comentario");
+                if(!end)
+                    System.out.println("2. ver siguiente pagina");
+                if(contador>0)
+                    System.out.println("3. ver anterior pagina");
+                System.out.println("0. Salir al menu principal");
+                System.out.println("----------------------------------------");
+                System.out.println("Elija una opcion: ");
+                opcion=sc.nextInt();
+                try {
+                    switch (opcion){
+                        case 0:
+                            esteBien=true;
+                            noVermas=true;
+                            break;
+                        case 1:
+                            esteBien=true;
+                            noVermas=true;
+                            int numero;
+                            System.out.println("Introduzca el numero del comentario a seleccionar: ");
+                            numero=sc.nextInt();
+                            if(comentarios[numero]!=null)
+                                userController.seleccionarComentario(comentarios[numero],p);
+                            else System.out.println("No existe esa publicacion");
+                            break;
+                        case 2:
+                            esteBien=true;
+                            contador+=50;
+                            break;
+                        case 3:
+                            esteBien=true;
+                            contador-=50;
+                            break;
+                        default:
+                            System.out.println("Debe ser un numero entre el 0 y el 3"); //CAMBIAR NUMERO
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    sc.next();
+                }
+            }
+        }
     }
     public void publicar(Usuario u,Publicacion p)
     {
@@ -84,9 +165,13 @@ public class UsuarioController implements IUsuarioController {
     {
 
     }
-    public Publicacion seleccionarPublicacion(Publicacion p)
+    public void seleccionarPublicacion(Publicacion p, Usuario u)
     {
-        return new Publicacion_Tipo_Enlace(new Usuario());
+        System.out.println(p.AString());
+    }
+    public void seleccionarComentario(Comentario c,Publicacion p)
+    {
+        System.out.println(c.AString());
     }
     public Publicacion seleccionarTipoPublicacion(Publicacion p)
     {
@@ -119,11 +204,25 @@ public class UsuarioController implements IUsuarioController {
                 _db.connect();
                 publicaciones = new Publicacion[50];
                 ArrayList<Object[]> rows = _db.readRow("Publicacion", new Object[]{
-                        new Tupla<String, Object>("correo", u.getCorreo_electronico_UPM())  //HE QUITADO UNA COMA QUE PARECIA INNECESARIA.
-                }, "creador,fecha", "date", contador.toString(), "50");
+                        new Tupla<String, Object>("id_u", u.getCorreo_electronico_UPM())  //HE QUITADO UNA COMA QUE PARECIA INNECESARIA.
+                }, "id_u,date,id_Pub,contenido,referenciada,tipo", "date", contador.toString(), "50");
                 for (int i = 0; i < rows.size(); i++) {
-                    Object[] aux = rows.get(i);
-                    publicaciones[i].setPublicacion(aux);
+                    if((Integer) rows.get(i)[5]==1){
+                        publicaciones[i]=new Publicacion_Tipo_Texto();
+                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
+                        publicaciones[i].setcontenido((String) rows.get(i)[3]);
+                    }
+                    else if ((Integer) rows.get(i)[5]==2){
+                        publicaciones[i]=new Publicacion_Tipo_Enlace();
+                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
+                        publicaciones[i].setcontenido((String) rows.get(i)[3]);
+                    }
+                    else{
+                        publicaciones[i]=new Publicacion_Tipo_Referencia();
+                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
+                        publicaciones[i].setcontenido((String) rows.get(i)[3]);
+                    }
+                    publiContoller.mostrarPublicacion(publicaciones[i],u);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -133,7 +232,8 @@ public class UsuarioController implements IUsuarioController {
             }
             for(int i=0;i<publicaciones.length;i++)
             {
-                publiContoller.mostrarPublicacion(publicaciones[i]);
+                if(publicaciones[i]!=null)
+                    publiContoller.mostrarPublicacion(publicaciones[i],u);
             }
             while(!esteBien) {
                 int opcion=0;
@@ -160,7 +260,7 @@ public class UsuarioController implements IUsuarioController {
                             System.out.println("Introduzca el numero de la publicacion a seleccionar: ");
                             numero=sc.nextInt();
                             if(publicaciones[numero]!=null)
-                                userController.seleccionarPublicacion(publicaciones[numero]);
+                                userController.seleccionarPublicacion(publicaciones[numero],u);
                             else System.out.println("No existe esa publicacion");
                             break;
                         case 2:

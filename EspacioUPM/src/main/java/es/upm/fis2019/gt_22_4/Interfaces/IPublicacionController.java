@@ -6,7 +6,7 @@ import es.upm.fis2019.gt_22_4.Domain.Usuario;
 
 public interface IPublicacionController {
     Publicacion generarBorrador(Usuario u);
-    void mostrarPublicacion(Publicacion p);
+    void mostrarPublicacion(Publicacion p,Usuario u);
     void mostrarPantallaSeleccionTipoPublicacion();
     Comentario[] mostrarComentarios();                  //CONSULTAR SI ESTO ES UN ARRAY
     void borrarPublicaciones(Usuario u,Publicacion p);  //ATRBUTO ¿PUBLICACION?

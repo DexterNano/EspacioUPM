@@ -3,6 +3,7 @@ package es.upm.fis2019.gt_22_4;
 //IMPORTAR CLASES NECESARIAS
 
 import es.upm.fis2019.gt_22_4.Controllers.*;
+import es.upm.fis2019.gt_22_4.Domain.Publicacion;
 import es.upm.fis2019.gt_22_4.Domain.Usuario;
 import es.upm.fis2019.gt_22_4.Interfaces.*;
 import es.upm.fis2019.gt_22_4.System.PassSecurity;
@@ -31,7 +32,6 @@ public class App
         //DEMO
         databaseController.connect();
         databaseController.ensureCreated();
-        databaseController.dispose();
         Usuario user = null;
 
         Scanner sn = new Scanner(System.in);
@@ -106,9 +106,9 @@ public class App
                                 System.out.println();
                                 System.out.println("1. Ver Publicaciones");
                                 if (seguimiento[1])
-                                    System.out.println("2.Dejar de seguir");
+                                    System.out.println("2. Dejar de seguir");
                                 else
-                                    System.out.println("2.Seguir");
+                                    System.out.println("2. Seguir");
                                 System.out.println("3. Ir Al menu principal");
                                 System.out.println();
                                 System.out.println("-----------------------------");
@@ -140,6 +140,8 @@ public class App
                                 System.out.println("Usuario no encontrado, puede haberse cambiado de alias o haber borrado el perfil");
                             break;
                         case 3:
+                            Publicacion publi=publicontroller.generarBorrador(user);
+                            publicontroller.publicar(user,publi);
                             break;
                         case 4:
                             userController.buscarUser(user.getAlias());

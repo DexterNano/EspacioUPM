@@ -24,4 +24,12 @@ public class Comentario {
     public void setComentada(Publicacion comentada) {
         this.comentada = comentada;
     }
+
+    public String AString() {
+        String resul="";
+        resul+="-------------------------\n";
+        resul+="  "+texto;
+        resul+="\n-------------------------\n";
+        return resul;
+    }
 }

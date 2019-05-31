@@ -2,18 +2,32 @@ package es.upm.fis2019.gt_22_4.Domain;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 public class Publicacion_Tipo_Enlace extends Publicacion {
     private String resumen;
     private String titulo;
     private String imagen;
+    private String url;
 
     public Publicacion_Tipo_Enlace(Usuario creador)
     {
         super(creador);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Escriba la direccion web: ");
+        url= sc.nextLine();
         this.resumen="";
         this.titulo="";
         this.imagen="";
+        super.tipo=2;
+    }
+    public Publicacion_Tipo_Enlace(){
+        super();
+        this.resumen="";
+        this.titulo="";
+        this.imagen="";
+        this.url="";
+        super.tipo=2;
     }
     public String getResumen() {
         return resumen;
@@ -24,6 +38,7 @@ public class Publicacion_Tipo_Enlace extends Publicacion {
     public String getImagen() {
         return imagen;
     }
+    public String getUrl(){return url;}
 
     public void setResumen(String resumen) {
         this.resumen = resumen;
@@ -35,25 +50,27 @@ public class Publicacion_Tipo_Enlace extends Publicacion {
         this.imagen = imagen;
     }
 
-    public void setPublicacion(Object[] aux) throws ParseException {
-        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yy HH:mm:ss");
-        this.creador=new Usuario();
-        this.creador.setCorreo_electronico_UPM(aux[0].toString());
-        this.titulo=aux[1].toString();
-        this.resumen=aux[2].toString();
-        this.imagen=aux[3].toString();
-        try {
-            this.fecha = date.parse(aux[4].toString());
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        this.num_likes=Integer.parseInt(aux[5].toString());
-        this.num_dislikes=Integer.parseInt(aux[6].toString());
-    }
-
     public String AString()
     {
-        return "";
+        String resultado="";
+        resultado+="------------------------------------------------\n";
+        resultado+="         @"+super.creador.getAlias()+"\n\n";
+        resultado+="titulo: "+this.titulo+"\n";
+        resultado+="resumen: "+this.resumen+"\n";
+        resultado+="imagen: "+this.imagen+"\n";
+        resultado+="\n";
+        resultado+="Likes: "+super.num_likes+"    Dislikes: "+ super.num_dislikes+"\n";
+        resultado+="------------------------------------------------\n";
+        return resultado;
+    }
+    public String getContenido()
+    {
+        return this.getUrl();
+    }
+
+    @Override
+    public void setcontenido(String s) {
+        url=s;
     }
 
 }

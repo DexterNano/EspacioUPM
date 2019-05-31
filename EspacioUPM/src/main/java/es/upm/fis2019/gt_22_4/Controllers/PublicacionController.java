@@ -5,6 +5,8 @@ import es.upm.fis2019.gt_22_4.Interfaces.IDataBaseController;
 import es.upm.fis2019.gt_22_4.Interfaces.IPublicacionController;
 import es.upm.fis2019.gt_22_4.Interfaces.IUsuarioController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,7 +15,7 @@ public class PublicacionController implements IPublicacionController
     protected IDataBaseController _db;
 
     public PublicacionController(IDataBaseController db){
-        db=_db;
+        _db=db;
     }
     public Publicacion generarBorrador(Usuario u)
     {
@@ -53,11 +55,34 @@ public class PublicacionController implements IPublicacionController
         }
         return publicacion;
     }
-    public void mostrarPublicacion(Publicacion p)
+    public void mostrarPublicacion(Publicacion p, Usuario u)
     {
-        System.out.println("-----------------------------------");
-        System.out.println("@"+p.getCreador().getAlias());
+        IPublicacionController publicacioncontroller=new PublicacionController(_db);
+        Scanner sc = new Scanner(System.in);
+        Integer op;
         System.out.println(p.AString());
+        System.out.println();
+        System.out.println("1. Mostrar cometarios.");
+        if(p.getCreador().equals(u))
+            System.out.println("2. Borrar Publicacion.");
+        System.out.println();
+        System.out.println("Escoger una opcion: ");
+        op=sc.nextInt();
+        try{
+            switch (op)
+            {
+                case 1:
+
+                    break;
+                case 2:
+                    if(p.getCreador().equals(u))
+                        publicacioncontroller.borrarPublicaciones(u,p);
+                    break;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     public void mostrarPantallaSeleccionTipoPublicacion()
     {
@@ -74,9 +99,27 @@ public class PublicacionController implements IPublicacionController
     }
     public void borrarPublicaciones(Usuario u,Publicacion p)
     {
-
+        try {
+            _db.connect();
+            _db.deleteRow("Publicacion",new Object[]{
+                    new Tupla<String, Object>("id_u", u.getCorreo_electronico_UPM()),
+                    new Tupla<String, Object>("id_Pub", u.getAlias())
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void publicar(Usuario u, Publicacion p) {
-
+        try{
+            _db.connect();
+            if(p.getTipo()==3)
+                _db.createRow("Publicacion",u.getCorreo_electronico_UPM(),p.getId_p(), Timestamp.valueOf(LocalDateTime.now()),p.getContenido(),p.getId_p(),p.getTipo());
+            else
+                _db.createRow("Publicacion",u.getCorreo_electronico_UPM(),p.getId_p(), Timestamp.valueOf(LocalDateTime.now()),p.getContenido(),-1,p.getTipo());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _db.dispose();
+        }
     }
 }
