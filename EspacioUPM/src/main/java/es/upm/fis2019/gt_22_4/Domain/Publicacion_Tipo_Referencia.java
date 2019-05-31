@@ -4,6 +4,10 @@ public class Publicacion_Tipo_Referencia extends Publicacion {
     private Publicacion publicacion_referenciada;
     private Usuario usuarioReferenciado;
 
+    public Publicacion_Tipo_Referencia(Usuario creador) {
+        super(creador);
+    }
+
     public Publicacion getPublicacion_referenciada() {
         return publicacion_referenciada;
     }
@@ -16,5 +20,14 @@ public class Publicacion_Tipo_Referencia extends Publicacion {
     }
     public void setUsuarioReferenciado(Usuario usuarioReferenciado) {
         this.usuarioReferenciado = usuarioReferenciado;
+    }
+
+    public void setPublicacion(Object[] aux)
+    {
+
+    }
+    public String AString()
+    {
+        return "";
     }
 }

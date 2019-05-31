@@ -1,10 +1,12 @@
 package es.upm.fis2019.gt_22_4.Domain;
 
+import java.util.ArrayList;
+
 public class Comunidad {
     private Integer NumMiembros;
     private Integer NumAdministradores;
-    private String TimeLine;              //REVISAR SI ES UN STRING
-    private Integer id;
+    private ArrayList<Publicacion> TimeLine;              //REVISAR SI ES UN STRING
+    private Integer id_C;
 
     public Integer getNumMiembros() {
         return NumMiembros;
@@ -12,11 +14,11 @@ public class Comunidad {
     public Integer getNumAdministradores() {
         return NumAdministradores;
     }
-    public String getTimeLine() {
+    public ArrayList<Publicacion> getTimeLine() {
         return TimeLine;
     }
     public Integer getId() {
-        return id;
+        return id_C;
     }
 
     public void setNumAdministradores(Integer numAdministradores) {
@@ -25,10 +27,10 @@ public class Comunidad {
     public void setNumMiembros(Integer numMiembros) {
         NumMiembros = numMiembros;
     }
-    public void setTimeLine(String timeLine) {
+    public void setTimeLine(ArrayList<Publicacion> timeLine) {
         TimeLine = timeLine;
     }
     public void setId(Integer id) {
-        this.id = id;
+        this.id_C = id;
     }
 }

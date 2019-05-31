@@ -2,16 +2,22 @@ package es.upm.fis2019.gt_22_4.Domain;
 
 public class Usuario extends Usuario_no_registrado {
     private String Correo_electronico_UPM;
+    private String alias;
     private String Contrasenia;
     private Publicacion[] Publicaciones; //REVISAR SI ESTO ES ARRAY
     private Usuario seguidores;         //REVISAR SI ES UN ARRAY.
     private Usuario seguidos;           //REVISAR SI ES UN ARRAY.
     private String Historial_de_actividades;    //CONFIRMAR TIPO DE ELEMENTO.
 
-    public Usuario(String correo_electronico,String pass)
+    public Usuario(String correo_electronico,String pass,String alias)
     {
         Correo_electronico_UPM=correo_electronico;
         Contrasenia=pass;
+        this.alias=alias;
+    }
+
+    public Usuario() {
+
     }
 
     public Publicacion[] getPublicaciones() {
@@ -32,6 +38,7 @@ public class Usuario extends Usuario_no_registrado {
     public Usuario getSeguidos() {
         return seguidos;
     }
+    public String getAlias(){return alias;}
 
     public void setContrasenia(String contrasenia) {
         Contrasenia = contrasenia;
@@ -51,4 +58,5 @@ public class Usuario extends Usuario_no_registrado {
     public void setHistorial_de_actividades(String historial_de_actividades) {
         Historial_de_actividades = historial_de_actividades;
     }
+    public void setAlias(String a){this.alias = a;}
 }

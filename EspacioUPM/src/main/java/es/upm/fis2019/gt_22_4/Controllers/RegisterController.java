@@ -18,18 +18,18 @@ public class RegisterController implements IRegistrerController {
     }
 
 
-    public synchronized boolean register (Usuario user) throws Exception
+    public boolean register (Usuario user) throws Exception
     {
         try {
             _db.connect();
             ArrayList<Object[]> rows = _db.readRow("Usuario", new Object[] { 
-                new Tupla<String, Object>("correo", user.getCorreo_electronico_UPM()),
-			}, "correo");
+                new Tupla<String, Object>("correo", user.getCorreo_electronico_UPM())  //HE QUITADO UNA COMA QUE PARECIA INNECESARIA.
+			}, "correo",null,null,null);
 
             if (rows.size() > 0) { // Ya se ha registrado
                 return false;
             } else {
-                _db.createRow("Usuario", user.getCorreo_electronico_UPM(), _hasher.hash(user.getContrasenia()));
+                _db.createRow("Usuario", user.getCorreo_electronico_UPM(),user.getAlias(),_hasher.hash(user.getContrasenia()));
                 return true;
             }
         } catch (Exception ex) {

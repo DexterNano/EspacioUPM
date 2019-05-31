@@ -5,6 +5,10 @@ public class Publicacion_Tipo_Texto extends Publicacion
     private String texto;
     private Integer numero_de_caracteres;
 
+    public Publicacion_Tipo_Texto(Usuario creador) {
+        super(creador);
+    }
+
     public String getTexto() {
         return texto;
     }
@@ -17,5 +21,15 @@ public class Publicacion_Tipo_Texto extends Publicacion
     }
     public void setNumero_de_caracteres(Integer numero_de_caracteres) {
         this.numero_de_caracteres = numero_de_caracteres;
+    }
+
+    public void setPublicacion(Object[] aux)
+    {
+
+    }
+
+    public String AString()
+    {
+        return "";
     }
 }

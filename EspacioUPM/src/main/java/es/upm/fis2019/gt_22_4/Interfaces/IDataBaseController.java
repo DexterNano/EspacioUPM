@@ -11,7 +11,7 @@ public interface IDataBaseController {
     void createRow(String table, Object... args) throws Exception;
 
     //ArrayList<Object[]> readRow(String table, Tuple<String, Object>[] wheres, String elements) throws Exception;
-    ArrayList<Object[]> readRow(String table, Object[] wheres, String elements) throws Exception;
+    ArrayList<Object[]> readRow(String table, Object[] wheres, String elements, String order, String inicio, String numer) throws Exception;
 
     //void updateRow(String table, Tuple<String, Object>[] wheres, String[] columns, Object... args) throws Exception;
     void updateRow(String table, Object[] wheres, String[] columns, Object... args) throws Exception;

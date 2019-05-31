@@ -1,16 +1,35 @@
 package es.upm.fis2019.gt_22_4.Domain;
 
-public class Publicacion {
-    private Integer num_likes;
-    private Integer num_dislikes;
+import java.text.ParseException;
+import java.util.Date;
+
+public abstract class Publicacion {
+    protected Integer num_likes;
+    protected Integer num_dislikes;
+    protected Usuario creador;
+    protected Date fecha;          //NUEVA COSA AÑADIDA
 
     //¿COMENTARIOS?
+
+    public Publicacion(Usuario creador)
+    {
+        this.num_likes=0;
+        this.num_dislikes=0;
+        this.creador=creador;
+        fecha=null;
+    }
 
     public Integer getNum_dislikes() {
         return num_dislikes;
     }
     public Integer getNum_likes() {
         return num_likes;
+    }
+    public Usuario getCreador() {
+        return creador;
+    }
+    public Date getFecha() {
+        return fecha;
     }
 
     public void setNum_dislikes(Integer num_dislikes) {
@@ -19,4 +38,13 @@ public class Publicacion {
     public void setNum_likes(Integer num_likes) {
         this.num_likes = num_likes;
     }
+    public void setCreador(Usuario creador) {
+        this.creador = creador;
+    }
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public abstract void setPublicacion(Object[] aux) throws ParseException;
+    public abstract String AString();
 }

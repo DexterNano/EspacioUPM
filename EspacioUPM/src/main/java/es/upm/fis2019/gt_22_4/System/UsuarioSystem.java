@@ -1,5 +1,6 @@
 package es.upm.fis2019.gt_22_4.System;
 
+import es.upm.fis2019.gt_22_4.Domain.Publicacion;
 import es.upm.fis2019.gt_22_4.Domain.Usuario;
 import es.upm.fis2019.gt_22_4.Interfaces.IRegistrerController;
 import es.upm.fis2019.gt_22_4.Interfaces.ISessionController;
@@ -32,17 +33,18 @@ public class UsuarioSystem {
         Usuario user;
         System.out.println("Introduce email:");
         String email = sc.nextLine();
-        System.out.println("Introduce contraseña:");
-        String pwd = sc.nextLine();
         if(!checkEmail(email)) {
             System.out.println("EMAIL NO VALIDO!");
             return false;
         }
-
-        user = new Usuario(email, pwd);
+        System.out.println("Introduce contraseña:");
+        String pwd = sc.nextLine();
+        String alias;
+        System.out.println("Introduzca un alias: ");
+        alias = sc.nextLine();
+        user = new Usuario(email, pwd,alias);
         return registerController.register(user);
     }
-
     public Usuario login()
     {
         System.out.println("Introduce email:");
