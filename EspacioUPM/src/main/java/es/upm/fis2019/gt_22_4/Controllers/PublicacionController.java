@@ -3,13 +3,14 @@ package es.upm.fis2019.gt_22_4.Controllers;
 import es.upm.fis2019.gt_22_4.Domain.*;
 import es.upm.fis2019.gt_22_4.Interfaces.IDataBaseController;
 import es.upm.fis2019.gt_22_4.Interfaces.IPublicacionController;
+import es.upm.fis2019.gt_22_4.Interfaces.IUsuarioController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PublicacionController implements IPublicacionController
 {
-    private IDataBaseController _db;
+    protected IDataBaseController _db;
 
     public PublicacionController(IDataBaseController db){
         db=_db;
@@ -17,6 +18,8 @@ public class PublicacionController implements IPublicacionController
     public Publicacion generarBorrador(Usuario u)
     {
         Publicacion publicacion=null;
+        IPublicacionController publicontroller=new PublicacionController(_db);
+        IUsuarioController usuariocontroller = new UsuarioController(_db);
         Scanner sc=new Scanner(System.in);
         Integer op;
         boolean terminado=false;
@@ -29,10 +32,12 @@ public class PublicacionController implements IPublicacionController
                 switch (op) {
                     case 1:
                         publicacion=new Publicacion_Tipo_Texto(u);
+                        usuariocontroller.publicar(u,publicacion);
                         terminado = true;
                         break;
                     case 2:
                         publicacion=new Publicacion_Tipo_Enlace(u);
+                        usuariocontroller.publicar(u,publicacion);
                         terminado = true;
                         break;
                     case 3:
@@ -69,6 +74,9 @@ public class PublicacionController implements IPublicacionController
     }
     public void borrarPublicaciones(Usuario u,Publicacion p)
     {
+
+    }
+    public void publicar(Usuario u, Publicacion p) {
 
     }
 }

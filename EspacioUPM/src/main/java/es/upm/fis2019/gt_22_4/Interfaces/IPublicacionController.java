@@ -10,4 +10,5 @@ public interface IPublicacionController {
     void mostrarPantallaSeleccionTipoPublicacion();
     Comentario[] mostrarComentarios();                  //CONSULTAR SI ESTO ES UN ARRAY
     void borrarPublicaciones(Usuario u,Publicacion p);  //ATRBUTO ¿PUBLICACION?
+    void publicar(Usuario u ,Publicacion p);
 }

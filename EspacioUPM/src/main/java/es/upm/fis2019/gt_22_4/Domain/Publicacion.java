@@ -7,6 +7,7 @@ public abstract class Publicacion {
     protected Integer num_likes;
     protected Integer num_dislikes;
     protected Usuario creador;
+    protected Integer id_p;
     protected Date fecha;          //NUEVA COSA AÑADIDA
 
     //¿COMENTARIOS?
@@ -28,9 +29,10 @@ public abstract class Publicacion {
     public Usuario getCreador() {
         return creador;
     }
-    public Date getFecha() {
+    public Date getFecha(){
         return fecha;
     }
+    public Integer getId_p(){return id_p;}
 
     public void setNum_dislikes(Integer num_dislikes) {
         this.num_dislikes = num_dislikes;
@@ -44,6 +46,7 @@ public abstract class Publicacion {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+    public void setId_p(Integer id){this.id_p = id;}
 
     public abstract void setPublicacion(Object[] aux) throws ParseException;
     public abstract String AString();

@@ -2,15 +2,14 @@ package es.upm.fis2019.gt_22_4;
 
 //IMPORTAR CLASES NECESARIAS
 
-import es.upm.fis2019.gt_22_4.Controllers.DatabaseController;
-import es.upm.fis2019.gt_22_4.Controllers.RegisterController;
-import es.upm.fis2019.gt_22_4.Controllers.SessionController;
-import es.upm.fis2019.gt_22_4.Controllers.UsuarioController;
+import es.upm.fis2019.gt_22_4.Controllers.*;
 import es.upm.fis2019.gt_22_4.Domain.Usuario;
 import es.upm.fis2019.gt_22_4.Interfaces.*;
 import es.upm.fis2019.gt_22_4.System.PassSecurity;
 import es.upm.fis2019.gt_22_4.System.UsuarioSystem;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -25,11 +24,14 @@ public class App
 
         UsuarioSystem userSys = new UsuarioSystem(regCont, sesh);
         IUsuarioController userController;
+
+        IPublicacionController publicontroller = new PublicacionController(databaseController);
         //CREAR GESTION USUARIOS EN SYSTEM
 
         //DEMO
         databaseController.connect();
         databaseController.ensureCreated();
+        databaseController.dispose();
         Usuario user = null;
 
         Scanner sn = new Scanner(System.in);
@@ -71,6 +73,7 @@ public class App
         if(user!= null)
         {
             userController = new UsuarioController(databaseController);
+
             salir = false;
             while (!salir) {
                 System.out.println("1. Mostrar timeline");
@@ -124,6 +127,7 @@ public class App
                                                 userController.seguirUsuario(user, usuario);
                                             break;
                                         case 3:
+                                            publicontroller.generarBorrador(user);
                                             break;
                                         default:
                                             System.out.println("Opcion no valida");
@@ -135,13 +139,15 @@ public class App
                             } else
                                 System.out.println("Usuario no encontrado, puede haberse cambiado de alias o haber borrado el perfil");
                             break;
-                        //case 3: realizarPublicacion();
-                        //    break;
-                        //case 4: VerPerfil();
-                        //    break;
-                        case 5: userController.logOut();
-                                salir=true;
-                                break;
+                        case 3:
+                            break;
+                        case 4:
+                            userController.buscarUser(user.getAlias());
+                            break;
+                        case 5:
+                            userController.logOut();
+                            salir=true;
+                            break;
                         default:
                             System.out.println("Solo números entre el 1 y el 4");
                     }

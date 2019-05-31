@@ -36,5 +36,4 @@ public interface IUsuarioController {
     void rellenarDatosComunidad(Administrador_de_comunidad admin,Integer nm, Integer na);
 
     void escribirEnBorrador();
-    void publicarBorrador();
 }

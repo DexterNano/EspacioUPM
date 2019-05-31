@@ -256,11 +256,11 @@ public class DatabaseController implements IDataBaseController {
     public static void addDefaultTables(IDataBaseController controller){
         controller.addTable("Comunidad", toArray("NumMiembros","INTEGER","NumAdministradores","INTEGER","Id_C","INTEGER"),"Id_C",toArray());
         controller.addTable("Usuario",toArray("correo","TEXT","alias","TEXT","pass","TEXT"),"correo",toArray());
-        controller.addTable("Publicacion",toArray("id_u","TEXT","id_Pub","INTEGER","date","DATETIME"),"id_Pub",toArray("id_u","Usuario"));
+        controller.addTable("Publicacion",toArray("id_u","TEXT","id_Pub","INTEGER","date","DATETIME","contenido","TEXT","referenciada","INTEGER"),"id_Pub",toArray("id_u","Usuario"));
         controller.addTable("Comentario",toArray("Num_orden","INTEGER","publicacion","INTEGER","usuario","TEXT"),"publicacion, Num_orden",toArray("publicacion","Publicacion","usuario","Usuario"));
-        controller.addTable("PublicacionReferencia",toArray("Publicacion_Referenciada","INTEGER","Usuario_Referenciado","TEXT","id_Pub","INTEGER"),"id_Pub",toArray("id_Pub","Publicacion"));
-        controller.addTable("PublicacionEnlace",toArray("id_Pub","INTEGER","resumen","TEXT","titulo","TEXT","imagen","TEXT"),"id_Pub",toArray("id_Pub","Publicacion"));
-        controller.addTable("PublicacionTexto",toArray("id_Pub","INTEGER","texto","TEXT","num_Caracteres","INTEGER"),"id_Pub",toArray("id_Pub","Publicacion"));
+        //controller.addTable("PublicacionReferencia",toArray("Publicacion_Referenciada","INTEGER","Usuario_Referenciado","TEXT","id_Pub","INTEGER"),"id_Pub",toArray("id_Pub","Publicacion"));
+        //controller.addTable("PublicacionEnlace",toArray("id_Pub","INTEGER","resumen","TEXT","titulo","TEXT","imagen","TEXT"),"id_Pub",toArray("id_Pub","Publicacion"));
+        //controller.addTable("PublicacionTexto",toArray("id_Pub","INTEGER","texto","TEXT","num_Caracteres","INTEGER"),"id_Pub",toArray("id_Pub","Publicacion"));
         controller.addTable("Seguimiento",toArray("correo_seguidor","TEXT","correo_seguido","TEXT"),"correo_seguidor, correo_seguido",toArray("correo_seguidor","Usuario","correo_seguido","Usuario"));
     }
 
