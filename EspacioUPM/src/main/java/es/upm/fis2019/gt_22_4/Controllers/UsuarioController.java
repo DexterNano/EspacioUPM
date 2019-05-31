@@ -209,19 +209,18 @@ public class UsuarioController implements IUsuarioController {
                 for (int i = 0; i < rows.size(); i++) {
                     if((Integer) rows.get(i)[5]==1){
                         publicaciones[i]=new Publicacion_Tipo_Texto();
-                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
                         publicaciones[i].setcontenido((String) rows.get(i)[3]);
+
                     }
                     else if ((Integer) rows.get(i)[5]==2){
                         publicaciones[i]=new Publicacion_Tipo_Enlace();
-                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
                         publicaciones[i].setcontenido((String) rows.get(i)[3]);
                     }
                     else{
                         publicaciones[i]=new Publicacion_Tipo_Referencia();
-                        publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
-                        publicaciones[i].setcontenido((String) rows.get(i)[3]);
                     }
+                    publicaciones[i].setId_pub((Integer) rows.get(i)[2]);
+                    publicaciones[i].setCreador(u);
                     publiContoller.mostrarPublicacion(publicaciones[i],u);
                 }
             } catch (Exception e) {
